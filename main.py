@@ -11,12 +11,12 @@ import requests
 
 message=''
 
-with open('data/user_data.json', 'w') as output:
+with open('/home/python/STCK_EML_SDR/data/user_data.json', 'w') as output:
     user1 = User('forsimi@gmail.com', 86400)
     user1_json = jsonpickle.encode(user1)
     json.dump(user1_json, output)
 
-with open('data/user_data.json', 'r') as input:
+with open('/home/python/STCK_EML_SDR/data/user_data.json', 'r') as input:
     user_py=jsonpickle.decode(json.load(input))
 
 try:
@@ -29,13 +29,17 @@ try:
             # f = soup.find('div',attrs={'class': 'intraday__data'}).find('sup').get_text()
 
             f=scrap_stock.scratch_page('https://www.marketwatch.com/investing/stock/'+x,'intraday__close')
-            dig = scrap_stock.filter_dig(f.find('td').get_text())
-            str = scrap_stock.filter_str(f.find('td').get_text())
+            dig_prev = scrap_stock.filter_dig(f.find('td').get_text())
+                        
+            f=scrap_stock.scratch_page('https://www.marketwatch.com/investing/stock/'+x,'intraday__data')
+            dig = scrap_stock.filter_dig(f.find('span').get_text())
+            str = scrap_stock.filter_str(f.find('sup').get_text())
+            
 
             if str:
-                message+='Stock: '+x.upper()+' Price: '+dig[0]+' Currency: '+str[0]+'\n'
+                message+='Stock: '+x.upper()+'  Closing Price: '+dig[0]+'  Previous Closing Price: '+dig_prev[0]+'  Currency: '+str[0]+'\n'
             else:
-                message += 'Stock: '+x.upper()+' Price: '+dig[0]+' Currency: '+'\n'
+                message+='Stock: '+x.upper()+'  Closing Price: '+dig[0]+'  Previous Closing Price: '+dig_prev[0]+'  Currency: '+'\n'
 
         email_sender.send_email('cherrywidget@gmail.com','simi821219',user_py.email,'proba email kuldes',message+'Your next email in: 86400 sec')
         # f.clear()

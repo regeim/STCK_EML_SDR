@@ -1,1 +1,1 @@
-"{\"py/object\": \"dump_data.User\", \"email\": \"forsimi@gmail.com\", \"interval\": 43200, \"stock\": [\"otp\", \"vlkay\", \"sp500\", \"oil\"]}"
+"{\"interval\": 86400, \"py/object\": \"dump_data.User\", \"stock\": [\"otp\", \"vlkay\", \"sp500\"], \"email\": \"forsimi@gmail.com\"}"
