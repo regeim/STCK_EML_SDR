@@ -4,17 +4,20 @@ from bs4 import BeautifulSoup
 import re
 
 def filter_dig(text):
-    if "." in text:
+    if "." in text and "," not in text:
         return re.findall(r'(\d+\.\d+)', text)
+    elif "." in text and "," in text:
+        return re.findall(r'(\d+\,\d+\.\d+)', text)
     else:
         return re.findall(r'(\d+\,\d+)', text)
+
 def filter_str(text):
     return re.findall(r'\D+', text)
 
 def scratch_page(url,class_name):
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'lxml')
-    return soup.find('div', attrs={'class': class_name})
+    return soup.find('div',{'class': class_name})
 
 # dig = filter_dig(f.find("td").text)
 # str = filter_str(f.find("td").text)
