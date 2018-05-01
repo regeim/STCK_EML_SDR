@@ -4,7 +4,7 @@ import jsonpickle
 class User(object):
     def __init__(self, email, interval):
         self.email = email
-        self.stock = ['otp','vlkay','sp500','oil']
+        self.stock = ['otp','vlkay','sp500']
         self.interval = interval
 
 
